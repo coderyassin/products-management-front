@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from '../../models/product.model';
 import {CurrencyPipe, NgForOf} from '@angular/common';
 import {ProductComponent} from '../product/product.component';
+import {ProductService} from '../../services/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -17,12 +18,18 @@ import {ProductComponent} from '../product/product.component';
 export class ProductListComponent implements OnInit{
   products!: Product[];
 
-  ngOnInit(): void {
-      this.products = [
-        {name: "Laptop", price: 1500.0, category: { name: "Electronics", description: "All about electronics" }},
-        {name: "Laptop", price: 1500.0, category: { name: "Electronics", description: "All about electronics" }},
-        {name: "Laptop", price: 1500.0, category: { name: "Electronics", description: "All about electronics" }}
-      ];
+  constructor(private productService: ProductService) {
   }
 
+  ngOnInit(): void {
+      this.products = this.productService.productsList();
+  }
+
+  updateProduct(product: Product) {
+    this.productService.updateProduct(product);
+  }
+
+  deleteProduct(product: Product) {
+    this.productService.deleteProduct(product);
+  }
 }

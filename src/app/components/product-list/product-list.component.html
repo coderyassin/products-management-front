@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Product List</h2>
+  <h2>Manage products</h2>
   <table class="table table-bordered table-striped">
     <thead>
     <tr>
@@ -7,14 +7,26 @@
       <th>Price</th>
       <th>Category name</th>
       <th>Category description</th>
+      <th>Update</th>
+      <th>Delete</th>
     </tr>
     </thead>
     <tbody>
       <tr *ngFor="let product of products">
         <td>{{ product.name }}</td>
         <td>{{ product.price | currency:'USD' }}</td>
-        <td>{{ product.category.name }}</td>
-        <td>{{ product.category.description }}</td>
+        <td>{{ product.category?.name }}</td>
+        <td>{{ product.category?.description }}</td>
+        <td>
+          <button class="btn btn-outline-primary" (click)="updateProduct(product)">
+            <i class="fa-sharp-duotone fa-solid fa-pen"></i>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-danger" (click)="deleteProduct(product)">
+            <i class="fa-sharp-duotone fa-solid fa-trash"></i>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
