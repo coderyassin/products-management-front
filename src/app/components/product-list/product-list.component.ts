@@ -3,6 +3,8 @@ import {Product} from '../../models/product.model';
 import {CurrencyPipe, NgForOf} from '@angular/common';
 import {ProductComponent} from '../product/product.component';
 import {ProductService} from '../../services/product.service';
+import {ProductList} from '../../models/product-list.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -18,11 +20,18 @@ import {ProductService} from '../../services/product.service';
 export class ProductListComponent implements OnInit{
   products!: Product[];
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private router: Router) {
   }
 
   ngOnInit(): void {
-      this.products = this.productService.productsList();
+      this.loadingProducts();
+  }
+
+  loadingProducts() {
+    this.productService.productsList()
+      .subscribe((products: ProductList) => {
+        this.products = products.products;
+      })
   }
 
   updateProduct(product: Product) {
@@ -30,6 +39,9 @@ export class ProductListComponent implements OnInit{
   }
 
   deleteProduct(product: Product) {
-    this.productService.deleteProduct(product);
+    this.productService.deleteProduct(product)
+      .subscribe(() => {
+        this.loadingProducts();
+      });
   }
 }

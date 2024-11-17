@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import {Product} from '../models/product.model';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {map, Observable} from 'rxjs';
+import {ProductList} from '../models/product-list.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  private apiUrl = `${environment.productsManagementUrl}/products`;
   products!: Product[];
 
-  constructor() {
-    this.products = [
-      {name: "Laptop", price: 1500.0, category: { name: "Electronics", description: "All about electronics" }},
-      {name: "Printer", price: 3800.0, category: { name: "Electronics", description: "All about electronics" }},
-      {name: "Tablet", price: 2600.0, category: { name: "Electronics", description: "All about electronics" }}
-    ];
+  constructor(private httpClient: HttpClient) {
   }
 
-  productsList(): Product[] {
-      return this.products;
+  productsList(): Observable<ProductList> {
+    return this.httpClient.get<ProductList>(this.apiUrl);
   }
 
-  addProduct(product: Product) {
-    this.products.push(product);
+  addProduct(product: Product): Observable<Product> {
+    return this.httpClient.post<Product>(this.apiUrl, product);
   }
 
   updateProduct(product: Product) {
@@ -28,6 +28,6 @@ export class ProductService {
   }
 
   deleteProduct(product: Product) {
-    console.log('Delete product ', product);
+    return this.httpClient.delete<void>(`${this.apiUrl}/${product.id}`);
   }
 }

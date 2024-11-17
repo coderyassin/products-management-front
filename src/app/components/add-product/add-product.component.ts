@@ -23,12 +23,10 @@ export class AddProductComponent implements OnInit{
   }
 
   addProduct() {
-    this.productService.addProduct(this.product);
-    this.router.navigate(['/products'])
-      .then(() => {
-        console.log('Successful navigation !');
-      }).catch((err) => {
-      console.error('Navigation error :', err);
-    });
+    this.productService.addProduct(this.product)
+      .subscribe((product: Product) => {
+        console.log(product);
+        this.router.navigate(['/products']);
+      });
   }
 }
