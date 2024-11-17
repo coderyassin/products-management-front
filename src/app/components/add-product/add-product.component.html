@@ -14,7 +14,7 @@
     <div class="col-sm-2 col-md-2 col-lg-4">
       <div class="form-group">
         <label for="category">Choose a category:</label>
-        <select id="category" class="form-control">
+        <select id="category" class="form-control" [(ngModel)]="selectedCategoryId" name="category">
           <option *ngFor="let category of categories" [value]="category.id">
             {{ category.name }}
           </option>

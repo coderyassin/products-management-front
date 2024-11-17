@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Product} from '../models/product.model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {map, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ProductList} from '../models/product-list.model';
 
 @Injectable({
@@ -10,7 +10,6 @@ import {ProductList} from '../models/product-list.model';
 })
 export class ProductService {
   private apiUrl = `${environment.productsManagementUrl}/products`;
-  products!: Product[];
 
   constructor(private httpClient: HttpClient) {
   }
