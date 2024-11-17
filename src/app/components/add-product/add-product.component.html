@@ -1,6 +1,6 @@
 <div class="container">
   <div>
-    <h2>Add a product :</h2>
+    <h2> {{ actionTitle }} </h2>
   </div>
   <form>
     <div class="col-sm-4 col-md-4 col-lg-4">
@@ -11,8 +11,18 @@
       <label>Product price</label>
       <input type="number" [(ngModel)]="product.price" name="productPrice" class="form-control">
     </div>
+    <div class="col-sm-2 col-md-2 col-lg-4">
+      <div class="form-group">
+        <label for="category">Choose a category:</label>
+        <select id="category" class="form-control">
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+    </div>
     <div class="mt-2">
-      <button type="submit" (click)="addProduct()" class="btn btn-success">Add</button>
+      <button type="submit" (click)="onAction()" class="btn btn-success"> {{ action }} </button>
     </div>
   </form>
 </div>

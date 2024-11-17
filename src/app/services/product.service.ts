@@ -19,12 +19,16 @@ export class ProductService {
     return this.httpClient.get<ProductList>(this.apiUrl);
   }
 
+  productById(id: number): Observable<Product> {
+    return this.httpClient.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
   addProduct(product: Product): Observable<Product> {
     return this.httpClient.post<Product>(this.apiUrl, product);
   }
 
-  updateProduct(product: Product) {
-    console.log('Update product ', product);
+  updateProduct(product: Product): Observable<Product> {
+    return this.httpClient.put<Product>(`${this.apiUrl}/${product.id}`, product);
   }
 
   deleteProduct(product: Product) {
