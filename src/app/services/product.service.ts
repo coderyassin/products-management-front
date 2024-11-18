@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Product} from '../models/product.model';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {ProductList} from '../models/product-list.model';
@@ -16,6 +16,11 @@ export class ProductService {
 
   productsList(): Observable<ProductList> {
     return this.httpClient.get<ProductList>(this.apiUrl);
+  }
+
+  products( page: number, size: number): Observable<ProductList> {
+    const options = { params: new HttpParams().set('page', page).set('size', size) } ;
+    return this.httpClient.get<ProductList>(`${this.apiUrl}/all`, options);
   }
 
   productById(id: number): Observable<Product> {
