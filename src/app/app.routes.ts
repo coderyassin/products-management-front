@@ -6,6 +6,7 @@ import {ManageCategoryComponent} from './components/manage-category/manage-categ
 
 export const routes: Routes = [
   { path: 'products', component: ProductListComponent },
+  { path: 'products/:search', component: ProductListComponent },
   { path: 'add-product', component: AddProductComponent },
   { path: 'update-product/:id', component: AddProductComponent },
   { path: '', redirectTo: "products", pathMatch: "full" },
