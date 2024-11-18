@@ -26,4 +26,12 @@
     </tr>
     </tbody>
   </table>
+  <div *ngIf="totalItems">
+    <app-pagination
+      [currentPage]="currentPage"
+      [itemsPerPage]="itemsPerPage"
+      [totalItems]="totalItems"
+      (pageChanged)="onPageChange($event)"
+    ></app-pagination>
+  </div>
 </div>

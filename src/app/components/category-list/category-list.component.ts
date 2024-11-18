@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrencyPipe, NgForOf, TitleCasePipe} from '@angular/common';
+import {CurrencyPipe, NgForOf, NgIf, TitleCasePipe} from '@angular/common';
 import {Category} from '../../models/category.model';
 import {CategoryService} from '../../services/category.service';
 import {Router} from '@angular/router';
+import {PaginationComponent} from '../pagination/pagination.component';
+import {CategoryList} from '../../models/category-list.model';
 
 @Component({
   selector: 'app-category-list',
@@ -10,13 +12,18 @@ import {Router} from '@angular/router';
   imports: [
     CurrencyPipe,
     NgForOf,
-    TitleCasePipe
+    TitleCasePipe,
+    NgIf,
+    PaginationComponent
   ],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
 })
 export class CategoryListComponent implements OnInit {
   categories!: Category[];
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems!: number;
 
   constructor(private categoryService: CategoryService, private router: Router) {}
 
@@ -25,9 +32,10 @@ export class CategoryListComponent implements OnInit {
   }
 
   loadingCategories() {
-    this.categoryService.categories()
-      .subscribe((categories: Category[]) => {
-        this.categories = categories;
+    this.categoryService.categoriesWithPagination(this.currentPage, this.itemsPerPage)
+      .subscribe((categories: CategoryList) => {
+        this.categories = categories.categories;
+        this.totalItems = categories.totalElements;
       })
   }
 
@@ -40,5 +48,10 @@ export class CategoryListComponent implements OnInit {
       .subscribe(() => {
         this.loadingCategories();
       });
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.loadingCategories();
   }
 }

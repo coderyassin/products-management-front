@@ -18,7 +18,7 @@ export class ProductService {
     return this.httpClient.get<ProductList>(this.apiUrl);
   }
 
-  products( page: number, size: number): Observable<ProductList> {
+  products(page: number, size: number): Observable<ProductList> {
     const options = { params: new HttpParams().set('page', page).set('size', size) } ;
     return this.httpClient.get<ProductList>(`${this.apiUrl}/all`, options);
   }
