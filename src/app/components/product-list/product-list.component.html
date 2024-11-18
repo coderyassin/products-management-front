@@ -15,8 +15,8 @@
       <tr *ngFor="let product of products">
         <td>{{ product.name | titlecase }}</td>
         <td>{{ product.price | currency:'USD' }}</td>
-        <td>{{ product.category?.name | titlecase }}</td>
-        <td>{{ product.category?.description | titlecase }}</td>
+        <td>{{ product.category.name | titlecase }}</td>
+        <td>{{ product.category.description | titlecase }}</td>
         <td>
           <button class="btn btn-outline-primary" (click)="updateProduct(product)">
             <i class="fa-sharp-duotone fa-solid fa-pen"></i>

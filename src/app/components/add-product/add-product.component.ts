@@ -17,7 +17,7 @@ import {Category} from '../../models/category.model';
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css'
 })
-export class AddProductComponent implements OnInit{
+export class AddProductComponent implements OnInit {
   actionTitle: string = 'Add a product :';
   action: string = 'Add';
   product: Product = {category: {name: "", description: ""}, name: "", price: 0.0};
