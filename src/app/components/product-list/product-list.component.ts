@@ -27,7 +27,7 @@ import {FormsModule} from '@angular/forms';
 export class ProductListComponent implements OnInit {
   products!: Product[];
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 8;
   totalItems!: number;
   search: string = '';
   showPagination: boolean = true;
@@ -43,18 +43,22 @@ export class ProductListComponent implements OnInit {
     const search = this.route.snapshot.params['search'];
     if(search) {
       this.search = search;
-      this.productService.searchByName(this.search, this.currentPage, this.itemsPerPage)
-        .subscribe((products: ProductList) => {
-          this.products = products.products;
-          this.totalItems = products.totalElements;
-        });
+      this.searchProducts(false);
     } else {
-      this.productService.products(this.currentPage, this.itemsPerPage)
-        .subscribe((products: ProductList) => {
-          this.products = products.products;
-          this.totalItems = products.totalElements;
-        });
+      if(this.search.trim().length > 0) {
+        this.searchProducts(false);
+      } else {
+        this.retrieveProducts();
+      }
     }
+  }
+
+  retrieveProducts() {
+    this.productService.products(this.currentPage, this.itemsPerPage)
+      .subscribe((products: ProductList) => {
+        this.products = products.products;
+        this.totalItems = products.totalElements;
+      });
   }
 
   updateProduct(product: Product) {
@@ -74,6 +78,13 @@ export class ProductListComponent implements OnInit {
   }
 
   onSearch() {
+    this.searchProducts(true);
+  }
+
+  searchProducts(fromSearch: boolean) {
+    if(fromSearch) {
+      this.currentPage = 1;
+    }
     this.productService.searchByName(this.search, this.currentPage, this.itemsPerPage)
       .subscribe((products: ProductList) => {
         this.products = products.products;

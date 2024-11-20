@@ -5,6 +5,7 @@ import {CategoryService} from '../../services/category.service';
 import {Router} from '@angular/router';
 import {PaginationComponent} from '../pagination/pagination.component';
 import {CategoryList} from '../../models/category-list.model';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-category-list',
@@ -14,7 +15,8 @@ import {CategoryList} from '../../models/category-list.model';
     NgForOf,
     TitleCasePipe,
     NgIf,
-    PaginationComponent
+    PaginationComponent,
+    FormsModule
   ],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
@@ -22,8 +24,10 @@ import {CategoryList} from '../../models/category-list.model';
 export class CategoryListComponent implements OnInit {
   categories!: Category[];
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 2;
   totalItems!: number;
+  search: string = '';
+  showPagination: boolean = true;
 
   constructor(private categoryService: CategoryService, private router: Router) {}
 
@@ -32,11 +36,11 @@ export class CategoryListComponent implements OnInit {
   }
 
   loadingCategories() {
-    this.categoryService.categoriesWithPagination(this.currentPage, this.itemsPerPage)
-      .subscribe((categories: CategoryList) => {
-        this.categories = categories.categories;
-        this.totalItems = categories.totalElements;
-      })
+    if(this.search.trim().length > 0) {
+      this.onSearch();
+    } else {
+      this.searchProducts(false);
+    }
   }
 
   updateCategory(category: Category) {
@@ -52,6 +56,29 @@ export class CategoryListComponent implements OnInit {
 
   onPageChange(page: number) {
     this.currentPage = page;
-    this.loadingCategories();
+    this.searchProducts(false);
+  }
+
+  onSearch() {
+    this.searchProducts(true);
+  }
+
+  searchProducts(fromSearch: boolean) {
+    if(fromSearch) {
+      this.currentPage = 1;
+    }
+    this.categoryService.searchByName(this.search, this.currentPage, this.itemsPerPage)
+      .subscribe((categories: CategoryList) => {
+        this.categories = categories.categories;
+        this.totalItems = categories.totalElements;
+        this.togglePagination();
+      });
+  }
+
+  togglePagination(): void {
+    this.showPagination = false;
+    setTimeout(() => {
+      this.showPagination = true;
+    }, 0);
   }
 }

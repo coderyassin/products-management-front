@@ -38,4 +38,9 @@ export class CategoryService {
   deleteCategory(category: Category) {
     return this.httpClient.delete<void>(`${this.apiUrl}/${category.id}`);
   }
+
+  searchByName(search: string, page: number, size: number): Observable<CategoryList> {
+    const options = { params: new HttpParams().set('page', page).set('size', size).set('search', search) } ;
+    return this.httpClient.get<CategoryList>(`${this.apiUrl}/search`, options);
+  }
 }
