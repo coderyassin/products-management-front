@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
 import {PaginationComponent} from '../pagination/pagination.component';
 import {CategoryList} from '../../models/category-list.model';
 import {FormsModule} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {CategoryDetailComponent} from '../category-detail/category-detail.component';
 
 @Component({
   selector: 'app-category-list',
@@ -29,7 +31,9 @@ export class CategoryListComponent implements OnInit {
   search: string = '';
   showPagination: boolean = true;
 
-  constructor(private categoryService: CategoryService, private router: Router) {}
+  constructor(private categoryService: CategoryService,
+              private router: Router,
+              public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadingCategories();
@@ -80,5 +84,13 @@ export class CategoryListComponent implements OnInit {
     setTimeout(() => {
       this.showPagination = true;
     }, 0);
+  }
+
+  openCategoryDetail(category: Category) {
+    this.dialog.open(CategoryDetailComponent, {
+      data: category,
+      width: '600px',
+      panelClass: 'custom-dialog-container'
+    });
   }
 }

@@ -7,6 +7,8 @@ import {ProductList} from '../../models/product-list.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PaginationComponent} from '../pagination/pagination.component';
 import {FormsModule} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {ProductDetailComponent} from '../product-detail/product-detail.component';
 
 @Component({
   selector: 'app-product-list',
@@ -32,7 +34,10 @@ export class ProductListComponent implements OnInit {
   search: string = '';
   showPagination: boolean = true;
 
-  constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute) {
+  constructor(private productService: ProductService,
+              private router: Router,
+              private route: ActivatedRoute,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -98,5 +103,13 @@ export class ProductListComponent implements OnInit {
     setTimeout(() => {
       this.showPagination = true;
     }, 0);
+  }
+
+  openProductDetail(product: Product) {
+    this.dialog.open(ProductDetailComponent, {
+      data: product,
+      width: '600px',
+      panelClass: 'custom-dialog-container'
+    });
   }
 }

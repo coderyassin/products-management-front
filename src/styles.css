@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+.custom-dialog-container .mat-mdc-dialog-container {
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.custom-dialog-container .mat-mdc-dialog-surface {
+  background-color: white;
+  padding: 20px;
+}
+
+.custom-dialog-container .mat-mdc-dialog-title {
+  color: #333;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.custom-dialog-container .mat-mdc-dialog-content {
+  color: #666;
+  max-height: 80vh;
+}
+
+.custom-dialog-container .mat-mdc-dialog-actions {
+  padding: 15px 0 0;
+  border-top: 1px solid #eee;
+}

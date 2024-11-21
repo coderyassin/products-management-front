@@ -11,6 +11,7 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Detail</th>
       <th>Update</th>
       <th>Delete</th>
     </tr>
@@ -19,6 +20,11 @@
     <tr *ngFor="let category of categories">
       <td>{{ category.name | titlecase }}</td>
       <td>{{ category.description | titlecase }}</td>
+      <td>
+        <button class="btn btn-outline-info" (click)="openCategoryDetail(category)">
+          <i class="fa-sharp-duotone fa-solid fa-circle-info"></i>
+        </button>
+      </td>
       <td>
         <button class="btn btn-outline-primary" (click)="updateCategory(category)">
           <i class="fa-sharp-duotone fa-solid fa-pen"></i>
