@@ -8,18 +8,20 @@ import {CategoryList} from '../../models/category-list.model';
 import {FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {CategoryDetailComponent} from '../category-detail/category-detail.component';
+import {HasRoleDirective} from "../../directives/has-role.directive";
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [
-    CurrencyPipe,
-    NgForOf,
-    TitleCasePipe,
-    NgIf,
-    PaginationComponent,
-    FormsModule
-  ],
+    imports: [
+        CurrencyPipe,
+        NgForOf,
+        TitleCasePipe,
+        NgIf,
+        PaginationComponent,
+        FormsModule,
+        HasRoleDirective
+    ],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
 })

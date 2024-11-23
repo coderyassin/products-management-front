@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {StorageService} from '../../services/storage.service';
+import {tap} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -25,10 +26,15 @@ export class LoginComponent {
               private storageService: StorageService) {}
 
   onLogin(): void {
-    this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        this.storageService.set('token', response.token)
-        this.router.navigate(['']).then(r => this.refreshPage());
+    this.authService.login(this.username, this.password).pipe(
+      tap(response => {
+        this.storageService.set('token', response.token);
+      })
+    ).subscribe({
+      next: () => {
+        this.router.navigate(['']).then(() => {
+          this.refreshPage();
+        });
       },
       error: (err) => {
         if (err.status === 401) {
@@ -37,7 +43,6 @@ export class LoginComponent {
       }
     });
   }
-
   refreshPage() {
     window.location.reload();
   }

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="products">
   <h2>Manage products</h2>
   <div class="mt-4 mb-2 col-lg-4">
     <form class="d-flex" role="search">
@@ -14,8 +14,8 @@
       <th>Category name</th>
       <th>Category description</th>
       <th>Detail</th>
-      <th>Update</th>
-      <th>Delete</th>
+      <th *hasRole="'ADMIN'">Update</th>
+      <th *hasRole="['ADMIN', 'MANAGER']">Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -29,12 +29,12 @@
             <i class="fa-sharp-duotone fa-solid fa-circle-info"></i>
           </button>
         </td>
-        <td>
+        <td *hasRole="'ADMIN'">
           <button class="btn btn-outline-primary" (click)="updateProduct(product)">
             <i class="fa-sharp-duotone fa-solid fa-pen"></i>
           </button>
         </td>
-        <td>
+        <td *hasRole="['ADMIN', 'MANAGER']">
           <button class="btn btn-outline-danger" (click)="deleteProduct(product)">
             <i class="fa-sharp-duotone fa-solid fa-trash"></i>
           </button>

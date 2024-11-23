@@ -12,8 +12,8 @@
       <th>Name</th>
       <th>Description</th>
       <th>Detail</th>
-      <th>Update</th>
-      <th>Delete</th>
+      <th *hasRole="'ADMIN'">Update</th>
+      <th *hasRole="'ADMIN'">Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -25,12 +25,12 @@
           <i class="fa-sharp-duotone fa-solid fa-circle-info"></i>
         </button>
       </td>
-      <td>
+      <td *hasRole="'ADMIN'">
         <button class="btn btn-outline-primary" (click)="updateCategory(category)">
           <i class="fa-sharp-duotone fa-solid fa-pen"></i>
         </button>
       </td>
-      <td>
+      <td *hasRole="'ADMIN'">
         <button class="btn btn-outline-danger" (click)="deleteCategory(category)">
           <i class="fa-sharp-duotone fa-solid fa-trash"></i>
         </button>

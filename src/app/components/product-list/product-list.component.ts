@@ -9,6 +9,8 @@ import {PaginationComponent} from '../pagination/pagination.component';
 import {FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ProductDetailComponent} from '../product-detail/product-detail.component';
+import {HasRoleDirective} from '../../directives/has-role.directive';
+import {AuthService} from '../../security/auth.service';
 
 @Component({
   selector: 'app-product-list',
@@ -21,7 +23,8 @@ import {ProductDetailComponent} from '../product-detail/product-detail.component
     TitleCasePipe,
     PaginationComponent,
     NgIf,
-    FormsModule
+    FormsModule,
+    HasRoleDirective
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
@@ -34,7 +37,8 @@ export class ProductListComponent implements OnInit {
   search: string = '';
   showPagination: boolean = true;
 
-  constructor(private productService: ProductService,
+  constructor(private authService: AuthService,
+              private productService: ProductService,
               private router: Router,
               private route: ActivatedRoute,
               public dialog: MatDialog) {

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../models/user.model';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, map, Observable} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {StorageService} from '../services/storage.service';
 
@@ -11,7 +11,7 @@ import {StorageService} from '../services/storage.service';
 })
 export class AuthService {
   private apiUrl = `${environment.securityServiceUrl}`;
-  private currentUserSubject: BehaviorSubject<User | null>;
+  public currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
   private jwtHelper = new JwtHelperService();
 
@@ -58,13 +58,16 @@ export class AuthService {
     return user ? user.roles.includes(role) : false;
   }
 
-  hasAnyRole(roles: string[]): boolean {
-    const user = this.currentUserSubject.value;
-    console.log(user);
-    if (user && user.roles) {
-      return user.roles.some(role => roles.includes(role));
-    }
-    return false;
+  hasAnyRole(roles: string[]): Observable<boolean> {
+    return this.currentUser.pipe(
+      map(user => {
+        if (user && user.roles) {
+          return user.roles.some(role => roles.includes(role));
+        }
+        return false;
+      })
+    );
   }
+
 }
 

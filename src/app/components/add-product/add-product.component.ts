@@ -60,13 +60,11 @@ export class AddProductComponent implements OnInit {
     if (this.product.id) {
       this.productService.updateProduct(this.product)
         .subscribe((product: Product) => {
-          console.log(product);
           this.router.navigate(['/products']);
         });
     } else {
       this.productService.addProduct(this.product)
         .subscribe((product: Product) => {
-          console.log(product);
           this.router.navigate(['/products']);
         });
     }
