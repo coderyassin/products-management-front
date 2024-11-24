@@ -43,4 +43,32 @@ export class CategoryService {
     const options = { params: new HttpParams().set('page', page).set('size', size).set('search', search) } ;
     return this.httpClient.get<CategoryList>(`${this.apiUrl}/search`, options);
   }
+
+  exportToCsv(categories: Category[]) {
+    const headers = ['Name', 'Description'];
+
+    const csvData = categories.map(category => {
+      return [
+        category.name,
+        category.description
+      ].join(',');
+    });
+
+    const csvContent = [
+      headers.join(','),
+      ...csvData
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'categories.csv');
+    link.style.visibility = 'hidden';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 }

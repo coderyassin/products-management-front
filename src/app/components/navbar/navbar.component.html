@@ -14,8 +14,21 @@
             Products
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/products">Products List</a></li>
-            <li><a class="dropdown-item" routerLink="/add-product">Add A New Product</a></li>
+            <li>
+              <a class="dropdown-item" routerLink="/products">
+                <i class="fa-duotone fa-solid fa-list"></i> Products List
+              </a>
+            </li>
+            <li *hasRole="'ADMIN'">
+              <a class="dropdown-item" routerLink="/add-product">
+                <i class="fa-duotone fa-solid fa-plus"></i> Add A New Product
+              </a>
+            </li>
+            <li *hasRole="'ADMIN'">
+              <a class="dropdown-item" style="cursor: pointer;" (click)="exportProducts()">
+                <i class="fa-sharp-duotone fa-solid fa-file-arrow-down"></i> Export Products
+              </a>
+            </li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -23,8 +36,21 @@
             Categories
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="/categories">Categories List</a></li>
-            <li><a class="dropdown-item" routerLink="/add-category">Add A New Category</a></li>
+            <li>
+              <a class="dropdown-item" routerLink="/categories">
+                <i class="fa-duotone fa-solid fa-list"></i> Categories List
+              </a>
+            </li>
+            <li *hasRole="'ADMIN'">
+              <a class="dropdown-item" routerLink="/add-category">
+                <i class="fa-duotone fa-solid fa-plus"></i> Add A New Category
+              </a>
+            </li>
+            <li *hasRole="'ADMIN'">
+              <a class="dropdown-item" style="cursor: pointer;" (click)="exportCategories()">
+                <i class="fa-sharp-duotone fa-solid fa-file-arrow-down"></i> Export Categories
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -36,7 +62,7 @@
             </span>
           </a>
           <ul class="dropdown-menu">
-            <a class="dropdown-item" href="#">login</a>
+            <a class="dropdown-item" *ngIf="!user">login</a>
             <a class="dropdown-item" (click)="logout()">logout</a>
             <a class="dropdown-item" href="#">Profile</a>
           </ul>
