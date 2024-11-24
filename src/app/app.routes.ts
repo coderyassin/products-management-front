@@ -7,10 +7,12 @@ import {AuthGuard} from './security/auth-guard';
 import {LoginComponent} from './components/login/login.component';
 import {UnauthorizedComponent} from './components/unauthorized/unauthorized.component';
 import {HomeComponent} from './components/home/home.component';
+import {ProfileComponent} from './components/profile/profile.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'products', component: ProductListComponent, canActivate: [AuthGuard], data: { roles: ['USER', 'ADMIN'] } },
   { path: 'products/:search', component: ProductListComponent, canActivate: [AuthGuard], data: { roles: ['USER', 'ADMIN'] } },

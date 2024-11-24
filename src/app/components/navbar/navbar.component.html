@@ -64,7 +64,7 @@
           <ul class="dropdown-menu">
             <a class="dropdown-item" *ngIf="!user">login</a>
             <a class="dropdown-item" (click)="logout()">logout</a>
-            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" *ngIf="user" routerLink="/profile">Profile</a>
           </ul>
         </li>
       </ul>
